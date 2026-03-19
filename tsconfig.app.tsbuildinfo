@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/assetcard/assetcard.tsx","./src/features/assets/types.ts","./src/features/watchlist/usewatchlist.ts","./src/features/watchlist/watchlist.storage.ts","./src/lib/formatters.ts","./src/mocks/assets.ts","./src/pages/dashboardpage.tsx"],"version":"5.9.3"}

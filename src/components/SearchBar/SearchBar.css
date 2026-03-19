@@ -1,0 +1,26 @@
+.search-bar {
+	margin-bottom: 24px;
+}
+
+.search-bar__label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 600;
+	color: #374151;
+}
+
+.search-bar__input {
+	width: 100%;
+	max-width: 420px;
+	padding: 12px 14px;
+	border: 1px solid #d1d5db;
+	border-radius: 12px;
+	font-size: 1rem;
+	background: white;
+	color: #111827;
+}
+
+.search-bar__input:focus-visible {
+	outline: 3px solid #93c5fd;
+	outline-offset: 2px;
+}
