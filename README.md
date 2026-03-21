@@ -6,7 +6,7 @@ This project was developed as part of a technical assessment with a strong focus
 
 ---
 
-## Objective
+## 🎯 Objective
 
 The goal was to build a realistic **Asset Watchlist application**, simulating real-world frontend challenges such as:
 
@@ -17,7 +17,7 @@ The goal was to build a realistic **Asset Watchlist application**, simulating re
 
 ---
 
-## Tech Stack
+## 🧱 Tech Stack
 
 * React (Vite)
 * TypeScript
@@ -29,9 +29,17 @@ The goal was to build a realistic **Asset Watchlist application**, simulating re
   * `localStorage`
   * `sessionStorage`
 
+### Notes on stack choice
+
+The project was implemented using **React**, which was allowed as an alternative to the preferred Svelte/SvelteKit stack.
+
+Instead of relying on a full framework, the application uses **React Router + TanStack Query** to replicate patterns typically provided by frameworks such as Next.js or SvelteKit (routing, data fetching, async state handling).
+
+This approach keeps the focus on architectural decisions and state management.
+
 ---
 
-## Key Design Decisions
+## 🧠 Key Design Decisions
 
 ### 1. Server State vs UI State
 
@@ -39,7 +47,7 @@ TanStack Query is used to manage **server state** (assets, categories), while UI
 
 **Why?**
 Server state has different lifecycle rules (caching, refetching, cancellation).
-Separating it from UI state avoids complexity and makes the app predictable.
+Separating it from UI state reduces complexity and improves predictability.
 
 ---
 
@@ -66,13 +74,13 @@ Logic is encapsulated in reusable hooks:
 * `useAssetFilters`
 
 **Why?**
-This keeps components declarative and focused only on rendering.
+This keeps components declarative and focused on rendering, while business logic remains reusable and testable.
 
 ---
 
-## Features
+## ✨ Features
 
-## 1. Dashboard – Asset List
+### 1. Dashboard – Asset List
 
 * Responsive grid layout
 * Asset cards display:
@@ -83,19 +91,19 @@ This keeps components declarative and focused only on rendering.
   * percentage change (color-coded)
 * Toggle watchlist directly from the card
 
-### UX States
+#### UX States
 
 * Skeleton loading during initial fetch
 * Background "searching" state during refetch
 * Error state with retry
-* Empty state with contextual message
+* Empty state with contextual messaging and recovery action
 
 **Why multiple states?**
 Real applications are defined by how they handle transitions, not just static data.
 
 ---
 
-## 2. Search with Debounce & Race Condition Handling
+### 2. Search with Debounce & Race Condition Handling
 
 * Debounced input (400ms)
 * Only the latest request updates the UI
@@ -106,7 +114,7 @@ Without cancellation, fast typing can lead to inconsistent UI (older responses o
 
 ---
 
-## 3. Filtering System
+### 3. Filtering System
 
 * Filter by asset category
 * Reset filters functionality
@@ -117,7 +125,7 @@ Filters represent temporary interaction context, not long-term user preferences.
 
 ---
 
-## 4. Watchlist
+### 4. Watchlist
 
 * Add/remove assets from watchlist
 * Persisted via `localStorage`
@@ -127,7 +135,7 @@ The watchlist represents a persistent user preference and should survive reloads
 
 ---
 
-## 5. Asset Detail Page
+### 5. Asset Detail Page
 
 * Dynamic routing (`/asset/:id`)
 * Independent data fetching per asset
@@ -138,7 +146,7 @@ The watchlist represents a persistent user preference and should survive reloads
   * not found
 
 **Why independent queries?**
-Each page should be self-contained and not depend on previous navigation state.
+Each page is self-contained and does not depend on navigation state.
 
 ---
 
@@ -157,11 +165,11 @@ A simulated API layer is used:
 * realistic async flows
 
 **Why simulate an API?**
-To focus on frontend architecture while still handling real-world async complexity.
+To focus on frontend architecture while still handling real-world async complexity and edge cases.
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ```text
 src/
@@ -199,39 +207,39 @@ src/
 
 ---
 
-## State & Persistence Strategy
+## 💾 State & Persistence Strategy
 
 | State Type  | Tool           | Reason                            |
 | ----------- | -------------- | --------------------------------- |
 | Server data | TanStack Query | caching, refetching, cancellation |
-| Filters     | sessionStorage | session-scoped UX state           |
+| Filters     | sessionStorage | session-scoped UI state           |
 | Watchlist   | localStorage   | persistent user preference        |
 
 This mirrors real-world product behavior.
 
 ---
 
-## Trade-offs & Decisions
+## ⚖️ Trade-offs & Decisions
 
-* No real backend → focus on frontend architecture
-* Simulated API → allows testing async behavior realistically
-* CSS only → avoids overengineering with UI libraries
+* No real backend → focus on frontend architecture and async behavior
+* Simulated API → enables realistic data flows without backend complexity
+* Lightweight styling → prioritizes structure and UX over visual system design
 
 The priority was **clarity, correctness, and scalability**.
 
 ---
 
-## Possible Improvements
+## 🚀 Possible Improvements
 
 * Real backend (e.g. Express)
 * URL-based filters (query params)
 * Pagination or infinite scroll
 * Unit / integration tests
-* Design system (tokens, components)
+* Design system (tokens, reusable UI primitives)
 
 ---
 
-## Running the Project
+## 🧪 Running the Project
 
 ```bash
 npm install
@@ -241,7 +249,7 @@ npm run build
 
 ---
 
-## What This Project Demonstrates
+## 💡 What This Project Demonstrates
 
 * Ability to structure a scalable frontend architecture
 * Understanding of async flows and race conditions
