@@ -1,5 +1,3 @@
-export { colors } from './config/colors';
-export { radius } from './config/radius';
-export { shadows } from './config/shadows';
-export { spacing } from './config/spacing';
+export { AppThemeProvider } from './ThemeProvider';
+export { useTheme } from './useTheme';
 export { tokens } from './tokens';

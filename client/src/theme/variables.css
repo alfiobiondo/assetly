@@ -36,6 +36,7 @@
 	--color-brand-accent-soft-hover: #e5ebff;
 	--color-brand-accent-hover: #dbeafe;
 	--color-brand-accent-border: #bfdbfe;
+	--color-brand-contrast: #ffffff;
 
 	--color-feedback-success: #15803d;
 	--color-feedback-danger: #b91c1c;
@@ -116,6 +117,7 @@
 	--color-brand-accent-soft-hover: #312e81;
 	--color-brand-accent-hover: #1e3a8a;
 	--color-brand-accent-border: #3730a3;
+	--color-brand-contrast: #ffffff;
 
 	--color-feedback-success: #22c55e;
 	--color-feedback-danger: #ef4444;

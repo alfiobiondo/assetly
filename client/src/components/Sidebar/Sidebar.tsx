@@ -25,7 +25,6 @@ export function Sidebar({ isOpen }: SidebarProps) {
 
 	const displayName = user?.name || user?.email || 'User';
 	const avatarLetter = displayName?.[0]?.toUpperCase() ?? 'U';
-
 	const isDark = theme === 'dark';
 
 	return (
@@ -121,7 +120,9 @@ export function Sidebar({ isOpen }: SidebarProps) {
 
 				<button
 					type='button'
-					className='sidebar__theme-toggle'
+					className={`sidebar__theme-toggle ${
+						isDark ? 'sidebar__theme-toggle--active' : ''
+					}`}
 					onClick={toggleTheme}
 					aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
 					aria-pressed={isDark}

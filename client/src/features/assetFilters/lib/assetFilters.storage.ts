@@ -1,4 +1,4 @@
-import type { AssetType } from '../assets/types';
+import type { AssetType } from '../../assets/types';
 
 const SEARCH_SESSION_KEY = 'wealthype-search-value';
 const CATEGORY_SESSION_KEY = 'wealthype-selected-category';

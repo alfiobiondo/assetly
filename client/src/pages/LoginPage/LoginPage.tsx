@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import {
+	Box,
+	Button,
+	Link,
+	Paper,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material';
 import { useAuth } from '../../features/auth/hooks/useAuth';
 import './LoginPage.css';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -16,77 +25,160 @@ export function LoginPage() {
 	}
 
 	return (
-		<div className='auth-page'>
-			<div className='auth-page__shell'>
-				<div className='auth-page__brand'>
-					<div className='auth-page__brand-mark'>W</div>
-					<div>
-						<p className='auth-page__eyebrow'>Wealthype</p>
-						<h1 className='auth-page__title'>Welcome back</h1>
-						<p className='auth-page__subtitle'>
+		<Box
+			className='auth-page'
+			sx={{
+				backgroundColor: 'background.default',
+			}}
+		>
+			<Box className='auth-page__shell'>
+				<Stack
+					direction='row'
+					spacing={3}
+					className='auth-page__brand'
+					sx={{
+						alignItems: 'flex-start',
+						position: 'relative',
+						zIndex: 1,
+					}}
+				>
+					<Box
+						className='auth-page__brand-mark'
+						sx={{
+							borderRadius: '20px',
+							background: 'var(--gradient-brand)',
+							color: 'var(--color-brand-contrast)',
+						}}
+					>
+						W
+					</Box>
+
+					<Stack
+						spacing={1}
+						sx={{
+							minWidth: 0,
+							maxWidth: 520,
+							position: 'relative',
+							zIndex: 1,
+						}}
+					>
+						<Typography variant='eyebrow' sx={{ color: 'text.secondary' }}>
+							Wealthype
+						</Typography>
+
+						<Typography
+							variant='title'
+							component='h1'
+							sx={{ color: 'text.primary' }}
+						>
+							Welcome back
+						</Typography>
+
+						<Typography variant='subtitle' sx={{ color: 'text.secondary' }}>
 							Log in to access your dashboard and personal watchlist.
-						</p>
-					</div>
-				</div>
+						</Typography>
+					</Stack>
+				</Stack>
 
-				<form className='auth-card' onSubmit={handleSubmit}>
-					<div className='auth-card__header'>
-						<h2 className='auth-card__title'>Log in</h2>
-						<p className='auth-card__description'>
+				<Paper
+					component='form'
+					onSubmit={handleSubmit}
+					elevation={0}
+					sx={(theme) => ({
+						p: 4,
+						display: 'flex',
+						flexDirection: 'column',
+						gap: 3,
+						border: `1px solid ${theme.palette.border.soft}`,
+						borderRadius: '24px',
+						boxShadow: theme.shadows[3],
+						backgroundColor: theme.palette.background.paper,
+						position: 'relative',
+						zIndex: 0,
+					})}
+				>
+					<Stack spacing={1}>
+						<Typography variant='h3' component='h2'>
+							Log in
+						</Typography>
+
+						<Typography variant='body2' color='text.secondary'>
 							Use your credentials to continue.
-						</p>
-					</div>
+						</Typography>
+					</Stack>
 
-					<div className='auth-card__fields'>
-						<label className='auth-card__field'>
-							<span>Email</span>
-							<input
+					<Stack spacing={2}>
+						<Stack spacing={1}>
+							<Typography
+								variant='body2'
+								component='label'
+								htmlFor='login-email'
+								sx={{ fontWeight: 600, color: 'text.primary' }}
+							>
+								Email
+							</Typography>
+
+							<TextField
+								id='login-email'
 								type='email'
 								placeholder='you@example.com'
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 								required
 							/>
-						</label>
+						</Stack>
 
-						<label className='auth-card__field'>
-							<span>Password</span>
-							<input
+						<Stack spacing={1}>
+							<Typography
+								variant='body2'
+								component='label'
+								htmlFor='login-password'
+								sx={{ fontWeight: 600, color: 'text.primary' }}
+							>
+								Password
+							</Typography>
+
+							<TextField
+								id='login-password'
 								type='password'
 								placeholder='Your password'
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								required
 							/>
-						</label>
-					</div>
+						</Stack>
+					</Stack>
 
-					<button
-						className='auth-card__submit'
-						type='submit'
-						disabled={isLoading}
-					>
+					<Button type='submit' variant='soft' disabled={isLoading} fullWidth>
 						{isLoading ? (
-							<span className='auth-card__submit-content'>
+							<Box className='auth-card__submit-content'>
 								<Spinner />
-								<span>Logging in...</span>
-							</span>
+								{/* <span>Logging in...</span> */}
+							</Box>
 						) : (
 							'Log in'
 						)}
-					</button>
+					</Button>
 
 					{error ? (
-						<p className='auth-card__error'>
+						<Typography variant='body2' color='error.main'>
 							{error instanceof Error ? error.message : 'Login failed'}
-						</p>
+						</Typography>
 					) : null}
 
-					<p className='auth-card__switch'>
-						Don&apos;t have an account? <Link to='/signup'>Create one</Link>
-					</p>
-				</form>
-			</div>
-		</div>
+					<Typography variant='body2' color='text.secondary'>
+						Don&apos;t have an account?{' '}
+						<Link
+							component={RouterLink}
+							to='/signup'
+							underline='hover'
+							sx={{ fontWeight: 600 }}
+						>
+							Create one
+						</Link>
+					</Typography>
+				</Paper>
+			</Box>
+		</Box>
 	);
 }
