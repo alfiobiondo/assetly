@@ -1,12 +1,29 @@
 import { ENV } from '../../../config/env';
+import { apiClient } from '../../../lib/apiClient';
 
-interface AuthResponse {
+export interface AuthUser {
+	id: string;
+	email: string;
+	name: string | null;
+}
+
+export interface AuthResponse {
 	token: string;
-	user: {
-		id: string;
-		email: string;
-		name: string | null;
-	};
+	user: AuthUser;
+}
+
+export interface CurrentUserResponse {
+	user: AuthUser;
+}
+
+export class ApiError extends Error {
+	status: number;
+
+	constructor(message: string, status: number) {
+		super(message);
+		this.name = 'ApiError';
+		this.status = status;
+	}
 }
 
 export async function login(
@@ -45,6 +62,21 @@ export async function signup(
 	if (!response.ok) {
 		const error = await response.json().catch(() => null);
 		throw new Error(error?.message ?? 'Signup failed');
+	}
+
+	return response.json();
+}
+
+export async function getCurrentUser(): Promise<CurrentUserResponse> {
+	const response = await apiClient('/api/auth/me');
+
+	if (!response.ok) {
+		const error = await response.json().catch(() => null);
+
+		throw new ApiError(
+			error?.message ?? 'Failed to fetch current user',
+			response.status
+		);
 	}
 
 	return response.json();

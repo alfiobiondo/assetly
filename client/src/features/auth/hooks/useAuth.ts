@@ -1,16 +1,18 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { login, signup } from '../api/auth';
 import { removeToken, setToken } from '../lib/authStorage';
 
 export function useAuth() {
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	const loginMutation = useMutation({
 		mutationFn: ({ email, password }: { email: string; password: string }) =>
 			login(email, password),
-		onSuccess: (data) => {
+		onSuccess: async (data) => {
 			setToken(data.token);
+			await queryClient.invalidateQueries({ queryKey: ['currentUser'] });
 			navigate('/');
 		},
 	});
@@ -25,14 +27,16 @@ export function useAuth() {
 			password: string;
 			name?: string;
 		}) => signup(email, password, name),
-		onSuccess: (data) => {
+		onSuccess: async (data) => {
 			setToken(data.token);
+			await queryClient.invalidateQueries({ queryKey: ['currentUser'] });
 			navigate('/');
 		},
 	});
 
 	function logout() {
 		removeToken();
+		queryClient.removeQueries({ queryKey: ['currentUser'] });
 		navigate('/login');
 	}
 

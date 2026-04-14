@@ -202,6 +202,14 @@
 	color: #7b8190;
 }
 
+.sidebar__account-email {
+	font-size: 12px;
+	color: #6b7280;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .sidebar__account-id {
 	font-size: 13px;
 	font-weight: 600;
@@ -234,6 +242,39 @@
 
 .sidebar--closed .sidebar__logout {
 	justify-content: center;
+}
+
+.sidebar__skeleton-line {
+	height: 12px;
+	border-radius: 6px;
+	background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 37%, #e5e7eb 63%);
+	background-size: 400% 100%;
+	animation: skeleton-loading 1.4s ease infinite;
+}
+
+.sidebar__skeleton-line--short {
+	width: 60px;
+}
+
+.sidebar__skeleton-line--long {
+	width: 120px;
+}
+
+.sidebar__skeleton-avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 12px;
+	background: #e5e7eb;
+	animation: skeleton-loading 1.4s ease infinite;
+}
+
+@keyframes skeleton-loading {
+	0% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0 50%;
+	}
 }
 
 @media (max-width: 768px) {

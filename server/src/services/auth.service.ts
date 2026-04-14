@@ -111,3 +111,20 @@ export async function login(input: LoginInput): Promise<AuthResponse> {
 		user: mapAuthUser(user),
 	};
 }
+
+export async function getCurrentUser(userId: string): Promise<AuthUser> {
+	const user = await prisma.user.findUnique({
+		where: { id: userId },
+		select: {
+			id: true,
+			email: true,
+			name: true,
+		},
+	});
+
+	if (!user) {
+		throw new Error('User not found');
+	}
+
+	return mapAuthUser(user);
+}

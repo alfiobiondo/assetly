@@ -14,9 +14,13 @@ interface SidebarProps {
 export function Sidebar({ isOpen }: SidebarProps) {
 	const { watchlistAssets } = useWatchlist();
 	const { logout } = useAuth();
-	const user = useCurrentUser();
+	const { data, isLoading } = useCurrentUser();
 
+	const user = data?.user;
 	const savedCount = watchlistAssets.length;
+
+	const displayName = user?.name || user?.email || 'User';
+	const avatarLetter = displayName?.[0]?.toUpperCase() ?? 'U';
 
 	return (
 		<aside
@@ -37,6 +41,7 @@ export function Sidebar({ isOpen }: SidebarProps) {
 					) : null}
 				</div>
 			</div>
+
 			<nav className='sidebar__nav'>
 				<NavLink
 					to='/'
@@ -74,18 +79,28 @@ export function Sidebar({ isOpen }: SidebarProps) {
 					) : null}
 				</NavLink>
 			</nav>
+
 			<div className='sidebar__footer'>
 				<div className='sidebar__account'>
 					<div className='sidebar__account-block'>
 						<div className='sidebar__account-avatar'>
-							{user?.userId?.slice(0, 1).toUpperCase() ?? 'U'}
+							{isLoading ? (
+								<div className='sidebar__skeleton-avatar' />
+							) : (
+								avatarLetter
+							)}
 						</div>
 					</div>
 
 					{isOpen ? (
 						<div className='sidebar__account-copy'>
 							<span className='sidebar__account-label'>Signed in</span>
-							<span className='sidebar__account-id'>{user?.userId}</span>
+
+							{isLoading ? (
+								<div className='sidebar__skeleton-line sidebar__skeleton-line--long' />
+							) : (
+								<span className='sidebar__account-id'>{displayName}</span>
+							)}
 						</div>
 					) : null}
 				</div>
