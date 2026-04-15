@@ -10,6 +10,12 @@ export interface GetAssetsFilters {
 	type?: string;
 }
 
+const assetTypeMap: Record<AssetType, PrismaAssetType> = {
+	stock: PrismaAssetType.STOCK,
+	etf: PrismaAssetType.ETF,
+	crypto: PrismaAssetType.CRYPTO,
+};
+
 export function mapPrismaAssetType(type: PrismaAssetType): AssetType {
 	switch (type) {
 		case 'STOCK':
@@ -37,6 +43,10 @@ export async function getAssets(
 	filters: GetAssetsFilters = {}
 ): Promise<Asset[]> {
 	const { search, type } = filters;
+	const normalizedType =
+		type && ['stock', 'etf', 'crypto'].includes(type)
+			? assetTypeMap[type as AssetType]
+			: undefined;
 
 	const result = await prisma.asset.findMany({
 		where: {
@@ -58,9 +68,9 @@ export async function getAssets(
 						],
 				  }
 				: {}),
-			...(type
+			...(normalizedType
 				? {
-						type: type.toUpperCase() as PrismaAssetType,
+						type: normalizedType,
 				  }
 				: {}),
 		},
