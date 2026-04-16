@@ -14,7 +14,8 @@ export async function apiClient(input: string, init?: RequestInit) {
 		headers.set('Content-Type', 'application/json');
 	}
 
-	const url = input.startsWith('http') ? input : `${ENV.API_BASE_URL}${input}`;
+	const baseUrl = ENV.API_URL?.trim().replace(/\/$/, '') ?? '';
+	const url = input.startsWith('http') ? input : `${baseUrl}${input}`;
 
 	return fetch(url, {
 		...init,

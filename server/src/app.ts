@@ -13,23 +13,21 @@ export const app = express();
 
 app.disable('x-powered-by');
 
-// Needed when deployed behind a reverse proxy / platform proxy.
-// Safe to enable conditionally.
 if (process.env.TRUST_PROXY === 'true') {
 	app.set('trust proxy', 1);
 }
 
+const corsOrigin = process.env.CORS_ORIGIN;
 const allowedOrigins = [
-	'http://localhost:5173',
-	process.env.CLIENT_ORIGIN,
-].filter(Boolean) as string[];
+	...(process.env.NODE_ENV !== 'production' ? ['http://localhost:5173'] : []),
+	...(corsOrigin ? corsOrigin.split(',').map((origin) => origin.trim()) : []),
+].filter(Boolean);
 
 app.use(helmet());
 
 app.use(
 	cors({
 		origin(origin, callback) {
-			// Allow tools like curl/Postman and same-origin server-to-server calls
 			if (!origin) {
 				return callback(null, true);
 			}
@@ -40,12 +38,16 @@ app.use(
 
 			return callback(new Error('Origin not allowed by CORS'));
 		},
-	})
+	}),
 );
 
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 app.use(express.json({ limit: '100kb' }));
+
+app.get('/health', (_req, res) => {
+	res.status(200).json({ status: 'ok' });
+});
 
 app.get('/api/health', (_req, res) => {
 	res.status(200).json({ status: 'ok' });
